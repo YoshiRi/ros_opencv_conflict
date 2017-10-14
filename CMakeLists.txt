@@ -44,18 +44,25 @@ MESSAGE(WARNING "install path ${OpenCV_INSTALL_PATH}")
 MESSAGE(WARNING "include dirs ${OpenCV_INCLUDE_DIRS} ")
 MESSAGE(WARNING "include dirs ${catkin_INCLUDE_DIRS}")
 
-
+# same source different dependency
 add_executable(template_trackgpu1 src/TempTrackGPU.cpp)
 add_executable(template_trackgpu2 src/TempTrackGPU.cpp)
 add_executable(template_trackgpu3 src/TempTrackGPU.cpp)
+add_executable(template_trackgpu4 src/TempTrackGPU.cpp)
 
 
 target_link_libraries(template_trackgpu1 ${OpenCV_LIBS} ${catkin_LIBRARIES}) # This does not work 
 target_link_libraries(template_trackgpu2 ${OpenCV_LIBS}) # This does work
 
-set(catkin_LIBRAIRIES opencv_cudev; opencv_cudawarping; opencv_cudastereo; opencv_cudaoptflow; opencv_cudaobjdetect; opencv_cudalegacy; opencv_cudaimgproc; opencv_cudafilters; opencv_cudafeatures2d; opencv_cudacodec; opencv_cudabgsegm; opencv_cudaarithm;)
-MESSAGE(WARNING "Updated catkin lib Include ${catkin_LIBRARIES}")
 
+# change Catkin Libraries : do not contain ros-opencv3 information ( contain cv_bridge ) 
+set(catkin_LIBRARIES /opt/ros/kinetic/lib/libimage_transport.so;/opt/ros/kinetic/lib/libclass_loader.so;/usr/lib/libPocoFoundation.so;/usr/lib/aarch64-linux-gnu/libdl.so;/opt/ros/kinetic/lib/libroslib.so;/opt/ros/kinetic/lib/librospack.so;/usr/lib/aarch64-linux-gnu/libpython2.7.so;/usr/lib/aarch64-linux-gnu/libboost_program_options.so;/usr/lib/aarch64-linux-gnu/libtinyxml.so;/opt/ros/kinetic/lib/libcv_bridge.so;/opt/ros/kinetic/lib/libmessage_filters.so;/opt/ros/kinetic/lib/libroscpp.so;/usr/lib/aarch64-linux-gnu/libboost_signals.so;/usr/lib/aarch64-linux-gnu/libboost_filesystem.so;/opt/ros/kinetic/lib/libroscpp_serialization.so;/opt/ros/kinetic/lib/libxmlrpcpp.so;/opt/ros/kinetic/lib/librosconsole.so;/opt/ros/kinetic/lib/librosconsole_log4cxx.so;/opt/ros/kinetic/lib/librosconsole_backend_interface.so;/usr/lib/aarch64-linux-gnu/liblog4cxx.so;/usr/lib/aarch64-linux-gnu/libboost_regex.so;/opt/ros/kinetic/lib/librostime.so;/opt/ros/kinetic/lib/libcpp_common.so;/usr/lib/aarch64-linux-gnu/libboost_system.so;/usr/lib/aarch64-linux-gnu/libboost_thread.so;/usr/lib/aarch64-linux-gnu/libboost_chrono.so;/usr/lib/aarch64-linux-gnu/libboost_date_time.so;/usr/lib/aarch64-linux-gnu/libboost_atomic.so;/usr/lib/aarch64-linux-gnu/libpthread.so;/usr/lib/aarch64-linux-gnu/libconsole_bridge.so)
 target_link_libraries(template_trackgpu3 ${OpenCV_LIBS} ${catkin_LIBRARIES}) # Now it works?
+
+
+# change Catkin Libraries : do contain ros-opencv3 information
+set(catkin_LIBRARIES /opt/ros/kinetic/lib/libopencv_core3.so.3.2.0;)
+
+target_link_libraries(template_trackgpu4 ${OpenCV_LIBS} ${catkin_LIBRARIES}) # Do not work!!!
 
 
