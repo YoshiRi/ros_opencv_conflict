@@ -192,7 +192,7 @@ int main(){
     test.create(1, 1, CV_8U);
 
 
-    cv::VideoCapture cap(0);
+    cv::VideoCapture cap(1);
 
     if(!cap.isOpened()){  // check if we succeeded
         printf("can not open video !!");
